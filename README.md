@@ -19,11 +19,48 @@ const dayAndTime   = titor('l g:i a'); // 'Thursday 3:04 am'
 
 // If you'd like, you can pass in a specific time to format:
 
-const date = new Date('2036-03-14 16:05pm'); // Date to try out!
+const date = new Date('2036-03-14 16:05'); // Date to try out!
 
 const americanizeDate = titor('m/d/Y',             date); // '03/14/2036'
 const unixTimestamp   = titor('U',                 date); // '2089145100'
 const bigDateTime     = titor('l F jS, Y @ g:i A', date); // 'Friday March 14th, 2036 @ 4:05 PM'
+
+// You can include words, phrases, and more in the output;
+// be mindful that you escape any letters that overlap
+// this library's legend characters! Use a backslash: \
+
+const formattedOutput = titor(String.raw`
+
+\H\e\l\l\o, \W\o\r\l\d!
+=============
+
+\D\a\t\e \I\n\f\o:
+----------
+
+\D\a\y:   l
+\M\o\n\t\h: F
+\Y\e\a\r:  Y
+\U\n\ix:  U
+
+`, date);
+
+// formattedOutput would contain the following (sans comments):
+/*
+
+
+Hello, World!
+=============
+
+Date Info:
+----------
+
+Day:   Friday
+Month: March
+Year:  2036
+Unix:  2089145100
+
+
+*/
 ```
 
 ## Installation
