@@ -193,7 +193,7 @@ comparison = actual === expected;
 test(description, actual, expected, comparison);
 
 // B https://en.wikipedia.org/wiki/Swatch_Internet_Time
-description = 'B provides the Swatch Internet time';
+description = 'B provides the Swatch Internet time (000-999)';
 actual = titor('B', new Date(Date.UTC(1982, 6, 9, 5, 0, 0))); // Using UTC time for this experiment
 expected = '250';
 comparison = actual === expected;
@@ -252,6 +252,62 @@ test(description, actual, expected, comparison);
 description = 'e provides the timezone identifier';
 actual = titor('e', new Date(Date.UTC(1982, 6, 9, 5, 0, 0)));
 expected = 'UTC';
+comparison = actual === expected;
+test(description, actual, expected, comparison);
+
+// I
+description = 'I provides a 1 if it is daylight savings time, or a 0 if it is not';
+actual = titor('I', new Date(Date.UTC(1982, 6, 9, 5, 0, 0)));
+expected = '1';
+comparison = actual === expected;
+test(description, actual, expected, comparison);
+
+// O
+description = 'O provides difference to Greenwich time (GMT) in hours (+0000)';
+actual = titor('O', new Date(Date.UTC(1982, 6, 9, 5, 0, 0)));
+expected = '+0000';
+comparison = actual === expected;
+test(description, actual, expected, comparison);
+
+// P
+description = 'P provides difference to Greenwich time (GMT) in hours and minutes (colon-separated)';
+actual = titor('P', new Date(Date.UTC(1982, 6, 9, 5, 0, 0)));
+expected = '+00:00';
+comparison = actual === expected;
+test(description, actual, expected, comparison);
+
+// T
+description = 'T provides timezone abbreviation (EST)';
+actual = titor('T', new Date(Date.UTC(1982, 6, 9, 5, 0, 0)));
+expected = 'UTC';
+comparison = actual === expected;
+test(description, actual, expected, comparison);
+
+// Z
+description = 'Z provides the timezone offset in seconds (west of UTC are negative)';
+actual = titor('Z', new Date(Date.UTC(1982, 6, 9, 5, 0, 0)));
+expected = '0';
+comparison = actual === expected;
+test(description, actual, expected, comparison);
+
+// c
+description = 'c provides the ISO-8601 date (1982-07-09T05:00:00+00:00)';
+actual = titor('c', new Date(Date.UTC(1982, 6, 9, 5, 0, 0)));
+expected = '1982-07-09T05:00:00+00:00';
+comparison = actual === expected;
+test(description, actual, expected, comparison);
+
+// r
+description = 'r provides the RFC 2822 date (Fri, 09 Jul 1982 05:00:00 +0000)';
+actual = titor('r', new Date(Date.UTC(1982, 6, 9, 5, 0, 0)));
+expected = 'Fri, 09 Jul 1982 05:00:00 +0000';
+comparison = actual === expected;
+test(description, actual, expected, comparison);
+
+// U
+description = 'U provides the number of seconds since teh Unix Epoch';
+actual = titor('U', new Date(Date.UTC(1982, 6, 9, 5, 0, 0)));
+expected = '395038800';
 comparison = actual === expected;
 test(description, actual, expected, comparison);
 
