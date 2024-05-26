@@ -1,8 +1,8 @@
 {
   "name": "john-titor",
   "version": "0.0.1",
-  "description": "A JavaScript library for handling time.",
-  "main": "index.js",
+  "description": "A JavaScript library for handling datetime string formatting the PHP way.",
+  "main": "lib/titor.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/WarrenUhrich/john-titor/issues"
   },
-  "homepage": "https://github.com/WarrenUhrich/john-titor#readme"
+  "homepage": "https://github.com/WarrenUhrich/john-titor#readme",
+  "devDependencies": {
+    "mocha": "^10.4.0"
+  }
 }
