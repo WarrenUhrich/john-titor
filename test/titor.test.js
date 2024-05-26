@@ -321,15 +321,26 @@ const formattedFailures = failures.map(failure => `\t• \x1b[1m\x1b[31m❌ Fail
 if(formattedPasses.length > 0) {
     console.log();
     console.log('\x1b[4mPassing Tests:\x1b[0m');
+    console.log();
     for(const pass of formattedPasses) console.log(pass);
     console.log();
 }
 if(formattedFailures.length > 0) {
     console.log();
     console.log('\x1b[4mFailing Tests:\x1b[0m');
+    console.log();
     for(const failure of formattedFailures) console.log(failure);
     console.log();
 }
+
+const totalTests = passes.length + failures.length;
+const padding = String(totalTests).length;
+console.log();
+console.log('\x1b[7mTesting Complete:\x1b[0m');
+console.log();
+if(passes.length > 0) console.log(`\t• Tests \x1b[32mPassing: ${String(passes.length).padStart(padding, '0')}\x1b[0m/${String(totalTests).padStart(padding, '0')}`);
+if(failures.length > 0) console.log(`\t• Tests \x1b[31mFailing: ${String(failures.length).padStart(padding, '0')}\x1b[0m/${String(totalTests).padStart(padding, '0')}`);
+console.log();
 
 // Exit with failure or success code
 if(failures.length > 0) process.exit(1);
