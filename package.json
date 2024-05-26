@@ -4,7 +4,7 @@
   "description": "A JavaScript library for handling datetime string formatting the PHP way.",
   "main": "lib/titor.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/titor.test.js"
   },
   "repository": {
     "type": "git",
