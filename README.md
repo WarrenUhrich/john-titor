@@ -2,6 +2,42 @@
 
 John Titor is a zero-dependency JavaScript library for handling date-time string formatting [the PHP way](https://www.php.net/manual/en/datetime.format.php). Named after time traveler [`TimeTravel_0`](https://en.wikipedia.org/wiki/John_Titor), it has been designed to both make date string formatting easier in-general as well as make PHP developers feel more at-home in the JavaScript ecosystem.
 
+## Installation
+
+This library can be installed via [`npm`](https://www.npmjs.com/package/john-titor):
+
+```sh
+npm install john-titor
+```
+
+Once installed it can be used in your project via either ESM or CJS as-needed:
+
+```js
+import titor from 'john-titor';
+
+// OR
+
+const titor = require('john-titor');
+```
+
+If you'd like to include this in a web page, you can download the source code [here](https://raw.githubusercontent.com/WarrenUhrich/john-titor/main/lib/titor.js). Heck, in-a-pinch, you would be able to load it into your page with the following to start experimenting with it:
+
+```html
+<!-- John Titor date formatter: -->
+<script src="https://raw.githubusercontent.com/WarrenUhrich/john-titor/main/lib/titor.js"></script>
+```
+
+## How to use John Titor
+
+This library comes with a function called `titor`.
+
+Parameters:
+* `format`: a string containing special characters from the legend found below
+* (optional) `date`: a JavaScript `Date` object that you'd like to format as a string—*if no date is provided, it will use the present date and time instead*
+
+Return:
+* `string`: the provided date as a formatted string
+
 ## Example Usage
 
 ```js
@@ -62,10 +98,6 @@ Unix:  2089145100
 
 */
 ```
-
-## Installation
-
-(Instructions coming soon.)
 
 ## Quick Legend
 
