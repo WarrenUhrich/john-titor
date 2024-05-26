@@ -1,6 +1,6 @@
 {
   "name": "john-titor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "John Titor is a zero-dependency JavaScript library for handling date-time string formatting the PHP way.",
   "main": "lib/titor.js",
   "scripts": {
