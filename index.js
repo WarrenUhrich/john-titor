@@ -1,104 +1,94 @@
-/**
- *
- * Entry point for library.
- *
- */
+const daysShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const daysLong = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const monthsShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthsLong = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-const timeChars = {
-  /**
-   * Day of the month (01-31)
-   */
-  d: function(date) {
-    const dayOfMonth = date.getDate();
-    return dayOfMonth < 10 ? '0' + dayOfMonth : dayOfMonth;
-  },
-  /**
-   * Day of week (three letters, like "Mon")
-   */
-  D: function(date) {
-    switch(date.getDay()) {
-      case 0: return 'Sun';
-      case 1: return 'Mon';
-      case 2: return 'Tue';
-      case 3: return 'Wed';
-      case 4: return 'Thu';
-      case 5: return 'Fri';
-      case 6: return 'Sat';
-    }
-  },
-  /**
-   * Day of the month (1-31)
-   */
-  j: function(date) { return String(date.getDate()); },
-  /**
-   * Day of week (full name, like "Monday")
-   */
-  l: function(date) {
-    switch(date.getDay()) {
-      case 0: return 'Sunday';
-      case 1: return 'Monday';
-      case 2: return 'Tuesday';
-      case 3: return 'Wednesday';
-      case 4: return 'Thursday';
-      case 5: return 'Friday';
-      case 6: return 'Saturday';
-    }
-  },
-  /**
-   * Day of week in ISO-8601 (1-7)
-   */
-  N: function(date) { return date.getDay() + 1; },
-  S: function(date) {
-    const dayOfMonth = String(date.getDate());
-    const lastDigit = dayOfMonth[dayOfMonth.length - 1];
-    switch(lastDigit) {
-      case '0': return 'th';
-      case '1': return dayOfMonth === '11' ? 'th' : 'st';
-      case '2': return dayOfMonth === '12' ? 'th' : 'nd';
-      case '3': return dayOfMonth === '13' ? 'th' : 'rd';
+const formatFunctions = {
+  d: (date) => String(date.getDate()).padStart(2, '0'),
+  D: (date) => daysShort[date.getDay()],
+  j: (date) => String(date.getDate()),
+  l: (date) => daysLong[date.getDay()],
+  N: (date) => date.getDay() === 0 ? 7 : date.getDay(),
+  S: (date) => {
+    const day = date.getDate();
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
       default: return 'th';
     }
   },
-  /**
-   * Day of the week (0-6)
-   */
-  w: function(date) { return String(date.getDay()); },
-  z: function(date) {
-    const start = new Date(date.getFullYear(), 0, 0);
-    const diff = date - start + (start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000;
-    const oneDay = 1000 * 60 * 60 * 24;
-    const day = Math.floor(diff / oneDay);
-    return String(day);
+  w: (date) => String(date.getDay()),
+  z: (date) => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000),
+  W: (date) => {
+    const target = new Date(date.valueOf());
+    const dayNr = (date.getDay() + 6) % 7;
+    target.setDate(target.getDate() - dayNr + 3);
+    const firstThursday = target.valueOf();
+    target.setMonth(0, 1);
+    if (target.getDay() !== 4) {
+      target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+    }
+    return 1 + Math.ceil((firstThursday - target) / 604800000);
   },
-  W: function(date) {},
-  F: function(date) {},
-  m: function(date) {},
-  M: function(date) {},
-  n: function(date) {},
-  t: function(date) {},
-  L: function(date) {},
-  o: function(date) {},
-  Y: function(date) {},
-  y: function(date) {},
-  a: function(date) {},
-  A: function(date) {},
-  B: function(date) {},
-  g: function(date) {},
-  G: function(date) {},
-  h: function(date) {},
-  H: function(date) {},
-  i: function(date) {},
-  s: function(date) {},
-  u: function(date) {},
-  e: function(date) {},
-  I: function(date) {},
-  O: function(date) {},
-  P: function(date) {},
-  T: function(date) {},
-  Z: function(date) {},
-  c: function(date) {},
-  r: function(date) {},
-  U: function(date) {},
+  F: (date) => monthsLong[date.getMonth()],
+  m: (date) => String(date.getMonth() + 1).padStart(2, '0'),
+  M: (date) => monthsShort[date.getMonth()],
+  n: (date) => String(date.getMonth() + 1),
+  t: (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate(),
+  L: (date) => ((date.getFullYear() % 4 === 0 && date.getFullYear() % 100 !== 0) || date.getFullYear() % 400 === 0) ? '1' : '0',
+  o: (date) => {
+    const target = new Date(date.valueOf());
+    target.setDate(target.getDate() - ((date.getDay() + 6) % 7) + 3);
+    return target.getFullYear();
+  },
+  Y: (date) => String(date.getFullYear()),
+  y: (date) => String(date.getFullYear()).slice(-2),
+  a: (date) => date.getHours() >= 12 ? 'pm' : 'am',
+  A: (date) => date.getHours() >= 12 ? 'PM' : 'AM',
+  B: (date) => String(Math.floor((((date.getUTCHours() + 1) % 24) + date.getUTCMinutes() / 60 + date.getUTCSeconds() / 3600) * 1000 / 24)),
+  g: (date) => String(date.getHours() % 12 || 12),
+  G: (date) => String(date.getHours()),
+  h: (date) => String(date.getHours() % 12 || 12).padStart(2, '0'),
+  H: (date) => String(date.getHours()).padStart(2, '0'),
+  i: (date) => String(date.getMinutes()).padStart(2, '0'),
+  s: (date) => String(date.getSeconds()).padStart(2, '0'),
+  u: (date) => String(date.getMilliseconds() * 1000).padStart(6, '0'),
+  e: (date) => {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      return 'UTC';
+    }
+  },
+  I: (date) => {
+    const DST = (new Date(date.getFullYear(), 6, 1).getTimezoneOffset() < new Date(date.getFullYear(), 0, 1).getTimezoneOffset());
+    return DST ? '1' : '0';
+  },
+  O: (date) => {
+    const offset = date.getTimezoneOffset();
+    const sign = offset < 0 ? '+' : '-';
+    const absOffset = Math.abs(offset);
+    return `${sign}${String(Math.floor(absOffset / 60)).padStart(2, '0')}${String(absOffset % 60).padStart(2, '0')}`;
+  },
+  P: (date) => {
+    const offset = date.getTimezoneOffset();
+    const sign = offset < 0 ? '+' : '-';
+    const absOffset = Math.abs(offset);
+    return `${sign}${String(Math.floor(absOffset / 60)).padStart(2, '0')}:${String(absOffset % 60).padStart(2, '0')}`;
+  },
+  T: (date) => {
+    try {
+      return date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2];
+    } catch (e) {
+      return 'UTC';
+    }
+  },
+  Z: (date) => String(-date.getTimezoneOffset() * 60),
+  c: (date) => date.toISOString(),
+  r: (date) => date.toUTCString(),
+  U: (date) => String(Math.floor(date.getTime() / 1000)),
 };
 
 // Starting by getting the logic down...
@@ -111,7 +101,23 @@ function titor(format='', date = new Date()) {
 
   if(!validDate) console.log('ERR: titor encountered invalid date.');
   if(!validFormat) console.log('ERR: titor encountered invalid format.');
+
+  let newString = '';
+  const formatChars = Object.keys(formatFunctions);
+  const chars = format.split('');
+  
+  for(let i = 0; i < chars.length; i++) {
+    const char = chars[i];
+    if(char === '\\') continue;
+    const prevChar = chars[i - 1];
+    if(prevChar === '\\') { newString += char; continue; }
+    if(formatChars.includes(char)) {
+      if(prevChar === '\\') { newString += char; continue; }
+      newString += formatFunctions[char](date);
+      continue;
+    }
+    newString += char;
+  }
+
+  return newString;
 };
-
-titor(String.raw`\hello`);
-
