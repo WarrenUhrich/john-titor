@@ -7,15 +7,21 @@
     </head>
     <body>
         <h1>Titor Test</h1>
+        <p>
+            Does it show the current time below?
+            <br>
+            <time></time>
+        </p>
         <script src="../lib/titor.js"></script>
         <script>
-            document.body.innerHTML += `
-            
-                <p>Does it show the current time below?</p>
-
-                <p>${titor('Y-m-d h:i:s a')}</p>
-            
-            `;
+            const timeElement = document.querySelector('time');
+            console.log(timeElement);
+            const updateDisplayTime = () => {
+                timeElement.textContent = titor('Y-m-d h:i:s a');
+                timeElement.dateTime = titor('c');
+            };
+            updateDisplayTime();
+            setInterval(updateDisplayTime, 1000);
         </script>
     </body>
 </html>
