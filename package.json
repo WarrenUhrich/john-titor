@@ -17,8 +17,5 @@
   "bugs": {
     "url": "https://github.com/WarrenUhrich/john-titor/issues"
   },
-  "homepage": "https://github.com/WarrenUhrich/john-titor#readme",
-  "devDependencies": {
-    "mocha": "^10.4.0"
-  }
+  "homepage": "https://github.com/WarrenUhrich/john-titor#readme"
 }
