@@ -305,7 +305,7 @@ comparison = actual === expected;
 test(description, actual, expected, comparison);
 
 // U
-description = 'U provides the number of seconds since teh Unix Epoch';
+description = 'U provides the number of seconds since the Unix Epoch';
 actual = titor('U', new Date(Date.UTC(1982, 6, 9, 5, 0, 0)));
 expected = '395038800';
 comparison = actual === expected;
