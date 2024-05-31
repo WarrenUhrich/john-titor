@@ -478,7 +478,7 @@
                 document.getElementById('copyright-year').textContent = titor('Y');
 
                 tryItForm.addEventListener('submit', event => event.preventDefault());
-                formatInput.addEventListener('change', updateFormatOutput)
+                formatInput.addEventListener('input', updateFormatOutput)
 
                 setInterval(updateFormatOutput, 1000);
                 updateFormatOutput(formatInput.value);
