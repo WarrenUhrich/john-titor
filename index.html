@@ -285,7 +285,7 @@
                 <label for="format">
                     Enter a format using special characters from the table below.    
                 </label>
-                <input id="format-input" type="text" value="l F jS, Y @ g:i:s A">
+                <input id="format-input" type="text" value="l F jS, Y @ g:i:s:u A">
                 <output for="format" id="format-output"></output>
             </form>
         </section>
@@ -480,7 +480,7 @@
                 tryItForm.addEventListener('submit', event => event.preventDefault());
                 formatInput.addEventListener('input', updateFormatOutput)
 
-                setInterval(updateFormatOutput, 1000);
+                setInterval(updateFormatOutput, 1);
                 updateFormatOutput(formatInput.value);
 
                 const darkModeButton = document.createElement('button');
